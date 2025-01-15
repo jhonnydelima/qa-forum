@@ -1,0 +1,18 @@
+{
+  "name": "qa-forum",
+  "version": "1.0.0",
+  "description": "Q&amp;A forum with Clean Arch, DDD, and Design Patterns",
+  "main": "index.js",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^22.10.5",
+    "typescript": "^5.7.3",
+    "vitest": "^2.1.8"
+  }
+}
