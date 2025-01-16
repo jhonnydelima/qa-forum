@@ -8,7 +8,7 @@ export class Entity<TProps> {
     return this._id
   }
 
-  constructor(props: TProps, id?: string) {
+  protected constructor(props: TProps, id?: string) {
     this.props = props
     this._id = new IdEntity(id)
   }

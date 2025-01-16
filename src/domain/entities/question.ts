@@ -1,6 +1,7 @@
 import { Slug } from "./value-objects/slug"
 import { Entity } from "../../core/entities/entity"
 import { IdEntity } from "../../core/entities/id-entity"
+import { Optional } from "../../core/types/optional"
 
 type QuestionProps = {
   authorId: IdEntity
@@ -12,4 +13,12 @@ type QuestionProps = {
   updatedAt?: Date
 }
 
-export class Question extends Entity<QuestionProps> {}
+export class Question extends Entity<QuestionProps> {
+  static create(props: Optional<QuestionProps, 'createdAt'>, id?: string) {
+    const question = new Question({
+      ...props,
+      createdAt: new Date(),
+    }, id)
+    return question
+  }
+}

@@ -1,5 +1,6 @@
 import { Entity } from "../../core/entities/entity"
 import { IdEntity } from "../../core/entities/id-entity"
+import { Optional } from "../../core/types/optional"
 
 type AnswerProps = {
   authorId: IdEntity
@@ -12,5 +13,13 @@ type AnswerProps = {
 export class Answer extends Entity<AnswerProps> {
   get content() {
     return this.props.content
+  }
+
+  static create(props: Optional<AnswerProps, 'createdAt'>, id?: string) {
+    const answer = new Answer({
+      ...props,
+      createdAt: new Date(),
+    }, id)
+    return answer
   }
 }
