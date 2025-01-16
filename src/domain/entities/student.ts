@@ -1,11 +1,8 @@
-import { randomUUID } from "node:crypto"
+import { S } from "vitest/dist/chunks/config.Cy0C388Z"
+import { Entity } from "../../core/entities/entity"
 
-export class Student {
-  public id: string
-  public name: string
-
-  constructor(name: string, id?: string) {
-    this.name = name
-    this.id = id ?? randomUUID()
-  }
+type StudentProps = {
+  name: string
 }
+
+export class Student extends Entity<StudentProps> {}
