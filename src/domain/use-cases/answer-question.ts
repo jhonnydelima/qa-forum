@@ -1,4 +1,4 @@
-import { IdEntity } from "../../core/entities/id-entity"
+import { IdEntity } from "@/core/entities/id-entity"
 import { Answer } from "../entities/answer"
 import { AnswersRepository } from "../repositories/answers-repository"
 

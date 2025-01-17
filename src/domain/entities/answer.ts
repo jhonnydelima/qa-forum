@@ -1,6 +1,6 @@
-import { Entity } from "../../core/entities/entity"
-import { IdEntity } from "../../core/entities/id-entity"
-import { Optional } from "../../core/types/optional"
+import { Entity } from "@/core/entities/entity"
+import { IdEntity } from "@/core/entities/id-entity"
+import { Optional } from "@/core/types/optional"
 
 type AnswerProps = {
   authorId: IdEntity
