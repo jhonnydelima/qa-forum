@@ -1,6 +1,6 @@
-import { IdEntity } from "@/core/entities/id-entity"
-import { Answer } from "../entities/answer"
-import { AnswersRepository } from "../repositories/answers-repository"
+import { IdEntity } from '@/core/entities/id-entity'
+import { Answer } from '../entities/answer'
+import { AnswersRepository } from '../repositories/answers-repository'
 
 type AnswerQuestionUseCaseRequest = {
   authorId: string
@@ -11,7 +11,11 @@ type AnswerQuestionUseCaseRequest = {
 export class AnswerQuestionUseCase {
   constructor(private answersRepository: AnswersRepository) {}
 
-  async execute({ authorId, questionId, content }: AnswerQuestionUseCaseRequest) {
+  async execute({
+    authorId,
+    questionId,
+    content,
+  }: AnswerQuestionUseCaseRequest) {
     const answer = Answer.create({
       content,
       authorId: new IdEntity(authorId),

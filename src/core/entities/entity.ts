@@ -1,4 +1,4 @@
-import { IdEntity } from "./id-entity"
+import { IdEntity } from './id-entity'
 
 export class Entity<TProps> {
   private _id: IdEntity
