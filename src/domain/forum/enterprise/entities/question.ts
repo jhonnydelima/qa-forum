@@ -4,7 +4,7 @@ import { IdEntity } from '@/core/entities/id-entity'
 import { Optional } from '@/core/types/optional'
 import dayjs from 'dayjs'
 
-type QuestionProps = {
+export type QuestionProps = {
   authorId: IdEntity
   bestAnswerId?: IdEntity
   title: string
