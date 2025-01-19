@@ -7,7 +7,7 @@ import {
 
 export function makeQuestion(
   overrides: Partial<QuestionProps> = {},
-  id?: IdEntity,
+  id?: string,
 ) {
   const question = Question.create(
     {
