@@ -1,7 +1,7 @@
 import { InMemoryAnswersRepository } from 'test/repositories/in-memory-answers-repository'
 import { FetchAnswersByQuestionUseCase } from './fetch-answers-by-question'
 import { makeAnswer } from 'test/factories/make-answer'
-import { IdEntity } from '@/core/entities/id-entity'
+import { UniqueIdEntity } from '@/core/entities/unique-id-entity'
 
 let answersRepository: InMemoryAnswersRepository
 let sut: FetchAnswersByQuestionUseCase
@@ -15,17 +15,17 @@ describe('Fetch Answers By Question Use Case', () => {
   it('should be able to fetch answers by a question', async () => {
     await answersRepository.create(
       makeAnswer({
-        questionId: new IdEntity('question-1'),
+        questionId: new UniqueIdEntity('question-1'),
       }),
     )
     await answersRepository.create(
       makeAnswer({
-        questionId: new IdEntity('question-1'),
+        questionId: new UniqueIdEntity('question-1'),
       }),
     )
     await answersRepository.create(
       makeAnswer({
-        questionId: new IdEntity('question-1'),
+        questionId: new UniqueIdEntity('question-1'),
       }),
     )
     const { answers } = await sut.execute({
@@ -39,7 +39,7 @@ describe('Fetch Answers By Question Use Case', () => {
     for (let i = 1; i <= 22; i++) {
       await answersRepository.create(
         makeAnswer({
-          questionId: new IdEntity('question-1'),
+          questionId: new UniqueIdEntity('question-1'),
         }),
       )
     }

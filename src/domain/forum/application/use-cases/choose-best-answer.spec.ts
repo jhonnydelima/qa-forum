@@ -3,7 +3,7 @@ import { ChooseBestAnswerUseCase } from './choose-best-answer'
 import { makeQuestion } from 'test/factories/make-question'
 import { InMemoryAnswersRepository } from 'test/repositories/in-memory-answers-repository'
 import { makeAnswer } from 'test/factories/make-answer'
-import { IdEntity } from '@/core/entities/id-entity'
+import { UniqueIdEntity } from '@/core/entities/unique-id-entity'
 
 let questionsRepository: InMemoryQuestionsRepository
 let answersRepository: InMemoryAnswersRepository
@@ -52,7 +52,7 @@ describe('Choose Best Answer Use Case', () => {
 
   it("should not be able to choose the best answer from another user's question", async () => {
     const question = makeQuestion({
-      authorId: new IdEntity('author-1'),
+      authorId: new UniqueIdEntity('author-1'),
     })
     await questionsRepository.create(question)
     const answer = makeAnswer({

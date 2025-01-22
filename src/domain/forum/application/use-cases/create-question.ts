@@ -1,6 +1,6 @@
 import { QuestionsRepository } from '../repositories/questions-repository'
 import { Question } from '../../enterprise/entities/question'
-import { IdEntity } from '@/core/entities/id-entity'
+import { UniqueIdEntity } from '@/core/entities/unique-id-entity'
 
 type CreateQuestionUseCaseRequest = {
   authorId: string
@@ -21,7 +21,7 @@ export class CreateQuestionUseCase {
     content,
   }: CreateQuestionUseCaseRequest): Promise<CreateQuestionUseCaseResponse> {
     const question = Question.create({
-      authorId: new IdEntity(authorId),
+      authorId: new UniqueIdEntity(authorId),
       title,
       content,
     })

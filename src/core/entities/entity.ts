@@ -1,7 +1,7 @@
-import { IdEntity } from './id-entity'
+import { UniqueIdEntity } from './unique-id-entity'
 
 export class Entity<TProps> {
-  private _id: IdEntity
+  private _id: UniqueIdEntity
   protected props: TProps
 
   get id() {
@@ -10,6 +10,6 @@ export class Entity<TProps> {
 
   protected constructor(props: TProps, id?: string) {
     this.props = props
-    this._id = new IdEntity(id)
+    this._id = new UniqueIdEntity(id)
   }
 }
