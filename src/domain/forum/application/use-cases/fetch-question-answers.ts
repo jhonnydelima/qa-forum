@@ -1,22 +1,22 @@
 import { Answer } from '../../enterprise/entities/answer'
 import { AnswersRepository } from '../repositories/answers-repository'
 
-type FetchAnswersByQuestionUseCaseRequest = {
+type FetchQuestionAnswersUseCaseRequest = {
   questionId: string
   page: number
 }
 
-type FetchAnswersByQuestionUseCaseResponse = {
+type FetchQuestionAnswersUseCaseResponse = {
   answers: Answer[]
 }
 
-export class FetchAnswersByQuestionUseCase {
+export class FetchQuestionAnswersUseCase {
   constructor(private answersRepository: AnswersRepository) {}
 
   async execute({
     questionId,
     page,
-  }: FetchAnswersByQuestionUseCaseRequest): Promise<FetchAnswersByQuestionUseCaseResponse> {
+  }: FetchQuestionAnswersUseCaseRequest): Promise<FetchQuestionAnswersUseCaseResponse> {
     const answers = await this.answersRepository.findManyByQuestionId(
       questionId,
       {

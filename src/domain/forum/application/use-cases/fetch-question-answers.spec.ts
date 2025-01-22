@@ -1,15 +1,15 @@
 import { InMemoryAnswersRepository } from 'test/repositories/in-memory-answers-repository'
-import { FetchAnswersByQuestionUseCase } from './fetch-answers-by-question'
+import { FetchQuestionAnswersUseCase } from './fetch-question-answers'
 import { makeAnswer } from 'test/factories/make-answer'
 import { UniqueIdEntity } from '@/core/entities/unique-id-entity'
 
 let answersRepository: InMemoryAnswersRepository
-let sut: FetchAnswersByQuestionUseCase
+let sut: FetchQuestionAnswersUseCase
 
-describe('Fetch Answers By Question Use Case', () => {
+describe('Fetch Question Answers Use Case', () => {
   beforeEach(() => {
     answersRepository = new InMemoryAnswersRepository()
-    sut = new FetchAnswersByQuestionUseCase(answersRepository)
+    sut = new FetchQuestionAnswersUseCase(answersRepository)
   })
 
   it('should be able to fetch answers by a question', async () => {
