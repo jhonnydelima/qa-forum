@@ -29,7 +29,7 @@ describe('Fetch Recent Questions Use Case', () => {
     ])
   })
 
-  it('should be able to fetch recent questions paginated', async () => {
+  it('should be able to fetch paginated recent questions', async () => {
     for (let i = 1; i <= 22; i++) {
       await questionsRepository.create(makeQuestion())
     }
