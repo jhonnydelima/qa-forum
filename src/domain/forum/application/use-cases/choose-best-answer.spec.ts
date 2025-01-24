@@ -4,6 +4,8 @@ import { makeQuestion } from 'test/factories/make-question'
 import { InMemoryAnswersRepository } from 'test/repositories/in-memory-answers-repository'
 import { makeAnswer } from 'test/factories/make-answer'
 import { UniqueIdEntity } from '@/core/entities/unique-id-entity'
+import { NotAllowedError } from './errors/not-allowed-error'
+import { ResourceNotFoundError } from './errors/resource-not-found-error'
 
 let questionsRepository: InMemoryQuestionsRepository
 let answersRepository: InMemoryAnswersRepository
@@ -31,23 +33,23 @@ describe('Choose Best Answer Use Case', () => {
   })
 
   it('should not be able to choose the best answer if the answer does not exist', async () => {
-    await expect(() =>
-      sut.execute({
-        answerId: 'answer-id',
-        authorId: 'author-id',
-      }),
-    ).rejects.toBeInstanceOf(Error)
+    const result = await sut.execute({
+      answerId: 'answer-id',
+      authorId: 'author-id',
+    })
+    expect(result.isLeft()).toBe(true)
+    expect(result.value).toBeInstanceOf(ResourceNotFoundError)
   })
 
   it('should not be able to choose the best answer if the question does not exist', async () => {
     const answer = makeAnswer()
     await answersRepository.create(answer)
-    await expect(() =>
-      sut.execute({
-        answerId: answer.id.toString(),
-        authorId: 'author-id',
-      }),
-    ).rejects.toBeInstanceOf(Error)
+    const result = await sut.execute({
+      answerId: answer.id.toString(),
+      authorId: 'author-id',
+    })
+    expect(result.isLeft()).toBe(true)
+    expect(result.value).toBeInstanceOf(ResourceNotFoundError)
   })
 
   it("should not be able to choose the best answer from another user's question", async () => {
@@ -59,11 +61,11 @@ describe('Choose Best Answer Use Case', () => {
       questionId: question.id,
     })
     await answersRepository.create(answer)
-    await expect(() =>
-      sut.execute({
-        answerId: answer.id.toString(),
-        authorId: 'author-2',
-      }),
-    ).rejects.toBeInstanceOf(Error)
+    const result = await sut.execute({
+      answerId: answer.id.toString(),
+      authorId: 'author-2',
+    })
+    expect(result.isLeft()).toBe(true)
+    expect(result.value).toBeInstanceOf(NotAllowedError)
   })
 })

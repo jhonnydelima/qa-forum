@@ -17,8 +17,13 @@ describe('Get Question By Slug Use Case', () => {
       slug: Slug.create('example-slug'),
     })
     await questionsRepository.create(newQuestion)
-    const { question } = await sut.execute({ slug: 'example-slug' })
-    expect(question.id).toBeTruthy()
-    expect(question.title).toEqual(newQuestion.title)
+    const result = await sut.execute({ slug: 'example-slug' })
+    expect(result.isRight()).toBe(true)
+    expect(result.value).toMatchObject({
+      question: expect.objectContaining({
+        id: newQuestion.id,
+        title: newQuestion.title,
+      }),
+    })
   })
 })
