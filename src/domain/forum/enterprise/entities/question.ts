@@ -3,7 +3,7 @@ import { Slug } from './value-objects/slug'
 import { UniqueIdEntity } from '@/core/entities/unique-id-entity'
 import { Optional } from '@/core/types/optional'
 import dayjs from 'dayjs'
-import { QuestionAttachment } from './question-attachment'
+import { QuestionAttachmentList } from './question-attachment-list'
 
 export type QuestionProps = {
   authorId: UniqueIdEntity
@@ -11,7 +11,7 @@ export type QuestionProps = {
   title: string
   slug: Slug
   content: string
-  attachments: QuestionAttachment[]
+  attachments: QuestionAttachmentList
   createdAt: Date
   updatedAt?: Date
 }
@@ -77,7 +77,7 @@ export class Question extends AggregateRoot<QuestionProps> {
     this.touch()
   }
 
-  set attachments(value: QuestionAttachment[]) {
+  set attachments(value: QuestionAttachmentList) {
     this.props.attachments = value
   }
 
@@ -89,7 +89,7 @@ export class Question extends AggregateRoot<QuestionProps> {
       {
         ...props,
         slug: props.slug ?? Slug.createFromText(props.title),
-        attachments: props.attachments ?? [],
+        attachments: props.attachments ?? new QuestionAttachmentList(),
         createdAt: props.createdAt ?? new Date(),
       },
       id,
