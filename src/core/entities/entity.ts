@@ -1,6 +1,6 @@
 import { UniqueIdEntity } from './unique-id-entity'
 
-export class Entity<TProps> {
+export abstract class Entity<TProps> {
   private _id: UniqueIdEntity
   protected props: TProps
 
