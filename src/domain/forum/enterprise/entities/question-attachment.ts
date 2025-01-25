@@ -1,7 +1,7 @@
 import { Entity } from '@/core/entities/entity'
 import { UniqueIdEntity } from '@/core/entities/unique-id-entity'
 
-type QuestionAttachmentProps = {
+export type QuestionAttachmentProps = {
   questionId: UniqueIdEntity
   attachmentId: UniqueIdEntity
 }

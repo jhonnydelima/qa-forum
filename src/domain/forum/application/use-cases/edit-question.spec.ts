@@ -3,30 +3,54 @@ import { EditQuestionUseCase } from './edit-question'
 import { makeQuestion } from 'test/factories/make-question'
 import { NotAllowedError } from './errors/not-allowed-error'
 import { ResourceNotFoundError } from './errors/resource-not-found-error'
+import { InMemoryQuestionAttachmentsRepository } from 'test/repositories/in-memory-question-attachments-repository'
+import { makeQuestionAttachment } from 'test/factories/make-question-attachment'
+import { UniqueIdEntity } from '@/core/entities/unique-id-entity'
 
 let questionsRepository: InMemoryQuestionsRepository
+let questionAttachmentsRepository: InMemoryQuestionAttachmentsRepository
 let sut: EditQuestionUseCase
 
 describe('Edit Question Use Case', () => {
   beforeEach(() => {
     questionsRepository = new InMemoryQuestionsRepository()
-    sut = new EditQuestionUseCase(questionsRepository)
+    questionAttachmentsRepository = new InMemoryQuestionAttachmentsRepository()
+    sut = new EditQuestionUseCase(
+      questionsRepository,
+      questionAttachmentsRepository,
+    )
   })
 
   it('should be able to edit a question', async () => {
     const newQuestion = makeQuestion()
     await questionsRepository.create(newQuestion)
     expect(questionsRepository.items).toHaveLength(1)
+    questionAttachmentsRepository.items.push(
+      makeQuestionAttachment({
+        questionId: newQuestion.id,
+        attachmentId: new UniqueIdEntity('1'),
+      }),
+      makeQuestionAttachment({
+        questionId: newQuestion.id,
+        attachmentId: new UniqueIdEntity('2'),
+      }),
+    )
     await sut.execute({
       questionId: newQuestion.id.toString(),
       authorId: newQuestion.authorId.toString(),
       title: 'New Title',
       content: 'New Content',
+      attachmentsIds: ['1', '3'],
     })
     expect(questionsRepository.items[0]).toMatchObject({
       title: 'New Title',
       content: 'New Content',
     })
+    expect(questionsRepository.items[0].attachments.getItems()).toHaveLength(2)
+    expect(questionsRepository.items[0].attachments.getItems()).toEqual([
+      expect.objectContaining({ attachmentId: new UniqueIdEntity('1') }),
+      expect.objectContaining({ attachmentId: new UniqueIdEntity('3') }),
+    ])
   })
 
   it('should not be able to edit a question from another user', async () => {
@@ -38,6 +62,7 @@ describe('Edit Question Use Case', () => {
       authorId: 'another-author-id',
       title: 'New Title',
       content: 'New Content',
+      attachmentsIds: [],
     })
     expect(result.isLeft()).toBe(true)
     expect(result.value).toBeInstanceOf(NotAllowedError)
@@ -49,6 +74,7 @@ describe('Edit Question Use Case', () => {
       authorId: 'author-id',
       title: 'New Title',
       content: 'New Content',
+      attachmentsIds: [],
     })
     expect(result.isLeft()).toBe(true)
     expect(result.value).toBeInstanceOf(ResourceNotFoundError)
