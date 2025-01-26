@@ -34,6 +34,7 @@ describe('Delete Question Use Case', () => {
         attachmentId: new UniqueIdEntity('2'),
       }),
     )
+    expect(questionAttachmentsRepository.items).toHaveLength(2)
     await sut.execute({
       authorId: newQuestion.authorId.toString(),
       questionId: newQuestion.id.toString(),

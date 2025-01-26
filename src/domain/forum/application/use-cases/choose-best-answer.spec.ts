@@ -7,9 +7,11 @@ import { UniqueIdEntity } from '@/core/entities/unique-id-entity'
 import { NotAllowedError } from './errors/not-allowed-error'
 import { ResourceNotFoundError } from './errors/resource-not-found-error'
 import { InMemoryQuestionAttachmentsRepository } from 'test/repositories/in-memory-question-attachments-repository'
+import { InMemoryAnswerAttachmentsRepository } from 'test/repositories/in-memory-answer-attachments-repository'
 
 let questionAttachmentsRepository: InMemoryQuestionAttachmentsRepository
 let questionsRepository: InMemoryQuestionsRepository
+let answerAttachmentsRepository: InMemoryAnswerAttachmentsRepository
 let answersRepository: InMemoryAnswersRepository
 let sut: ChooseBestAnswerUseCase
 
@@ -19,7 +21,10 @@ describe('Choose Best Answer Use Case', () => {
     questionsRepository = new InMemoryQuestionsRepository(
       questionAttachmentsRepository,
     )
-    answersRepository = new InMemoryAnswersRepository()
+    answerAttachmentsRepository = new InMemoryAnswerAttachmentsRepository()
+    answersRepository = new InMemoryAnswersRepository(
+      answerAttachmentsRepository,
+    )
     sut = new ChooseBestAnswerUseCase(questionsRepository, answersRepository)
   })
 
