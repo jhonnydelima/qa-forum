@@ -7,14 +7,16 @@ import { InMemoryQuestionAttachmentsRepository } from 'test/repositories/in-memo
 import { makeQuestionAttachment } from 'test/factories/make-question-attachment'
 import { UniqueIdEntity } from '@/core/entities/unique-id-entity'
 
-let questionsRepository: InMemoryQuestionsRepository
 let questionAttachmentsRepository: InMemoryQuestionAttachmentsRepository
+let questionsRepository: InMemoryQuestionsRepository
 let sut: EditQuestionUseCase
 
 describe('Edit Question Use Case', () => {
   beforeEach(() => {
-    questionsRepository = new InMemoryQuestionsRepository()
     questionAttachmentsRepository = new InMemoryQuestionAttachmentsRepository()
+    questionsRepository = new InMemoryQuestionsRepository(
+      questionAttachmentsRepository,
+    )
     sut = new EditQuestionUseCase(
       questionsRepository,
       questionAttachmentsRepository,

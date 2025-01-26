@@ -6,14 +6,19 @@ import { makeAnswer } from 'test/factories/make-answer'
 import { UniqueIdEntity } from '@/core/entities/unique-id-entity'
 import { NotAllowedError } from './errors/not-allowed-error'
 import { ResourceNotFoundError } from './errors/resource-not-found-error'
+import { InMemoryQuestionAttachmentsRepository } from 'test/repositories/in-memory-question-attachments-repository'
 
+let questionAttachmentsRepository: InMemoryQuestionAttachmentsRepository
 let questionsRepository: InMemoryQuestionsRepository
 let answersRepository: InMemoryAnswersRepository
 let sut: ChooseBestAnswerUseCase
 
 describe('Choose Best Answer Use Case', () => {
   beforeEach(() => {
-    questionsRepository = new InMemoryQuestionsRepository()
+    questionAttachmentsRepository = new InMemoryQuestionAttachmentsRepository()
+    questionsRepository = new InMemoryQuestionsRepository(
+      questionAttachmentsRepository,
+    )
     answersRepository = new InMemoryAnswersRepository()
     sut = new ChooseBestAnswerUseCase(questionsRepository, answersRepository)
   })
